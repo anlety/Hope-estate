@@ -1,4 +1,4 @@
-import {Router, Routes, Route} from 'react-router-dom'
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 
 
 // Import components
@@ -15,6 +15,8 @@ import SignUp from './pages/SignUp';
 function App() {
   return (
     <>
+    <Router>
+
     
     <Header/>
     <Routes>
@@ -23,9 +25,9 @@ function App() {
       <Route path='/profile' element={<Profile />} />
       <Route path='/sign-in' element={<SignIn />} />
       <Route path='/sign-up' element={<SignUp />} />
-      <Route path='/forget-password' element={<ForgotPassword />} />
+      <Route path='/forgot-password' element={<ForgotPassword />} />
     </Routes>
-    
+    </Router>
     </>
   );
 }

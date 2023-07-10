@@ -3,11 +3,13 @@ import { useLocation, Link } from 'react-router-dom';
 
 const Header = () => {
   const location = useLocation()
-  // console.log(location)
+  console.log(location)
 
   function matchRoute (route){
     if(route === location.pathname){
       return true
+    }else{
+      return false
     }
   }
   return (
@@ -28,7 +30,7 @@ const Header = () => {
             </Link>
             
             <Link to='sign-in'>
-                <li className={`py-3 text-sm font-semibold text-gray-400 border-b-transparent cursor-pointer ${matchRoute("/sign-in") && "text-blue-600"}`}>Sign in</li>
+                <li className={`py-3 text-sm font-semibold text-gray-400 border-b-transparent cursor-pointer ${matchRoute("/sign-in") && "text-blue-600 border-b-black"}`}>Sign in</li>
             </Link>
             
           </ul>
