@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import GoogleAuth from '../components/GoogleAuth';
 import {PiEyeClosedDuotone, PiEyeDuotone} from 'react-icons/pi'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { signInWithEmailAndPassword, getAuth } from 'firebase/auth';
+import {toast} from 'react-toastify'
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
@@ -19,13 +21,26 @@ const SignIn = () => {
       [e.target.id]: e.target.value,
     }))
   }
+  const navigate = useNavigate()
+  async function onSubmit(e){
+    e.preventDefault();
+    try {
+      const auth = getAuth()
+      const userCredential = await signInWithEmailAndPassword(auth, email, password)
+      if(userCredential.user){
+        navigate("/")
+      }
+    } catch (error) {
+      toast.error("Wrong username or password")
+    }
+  }
   return (
     <section>
       <h1 className='text-3xl text-center mt-6 font-bold'>Sign In</h1>
       <div className=''>
 
         <div className='w-[70%] justify-center items-center px-6 py-12 max-w-6xl mx-auto'>
-          <form>
+          <form onSubmit={onSubmit}>
             <input className='w-full px-4 py-2 text-xl text-gray-700 bg-white mb-6 border-gray-300 rounded transition ease-in-out' type='email' id='email' value={email} onChange={onChange} placeholder='email address'/>
             <div className='relative mb-6'>
             <input className='w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out' type={showPassword? "text": "password"} id='password' value={password} onChange={onChange} placeholder='password' />
