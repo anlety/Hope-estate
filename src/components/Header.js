@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLocation, Link } from 'react-router-dom';
+import {GiEagleHead} from 'react-icons/gi'
 
 const Header = () => {
   const location = useLocation()
@@ -16,7 +17,7 @@ const Header = () => {
     <div className='bg-white border-b shadow-sm sticky top-0 z-50'>
        <header className='flex justify-between items-center px-3 max-w-6xl mx-auto'>
         <Link to='/'>
-        <div className='h-5 cursor-pointer'>Hope Estate</div>
+        <div className='h-5 cursor-pointer flex items-center '><GiEagleHead className='text-3xl text-red-700'/> Hope Estate</div>
         </Link>
         
         <div className=''>
