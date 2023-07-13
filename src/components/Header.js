@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import {GiEagleHead} from 'react-icons/gi'
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+
 
 const Header = () => {
+  const [pageState, setPageState] = useState("Sign in")
   const location = useLocation()
-  console.log(location)
+  const auth = getAuth()
+  useEffect(() => {
+onAuthStateChanged(auth, (user) => {
+  // if the user is authenticated set tle header to profile otherwise set it to sign in
+  if(user){
+    setPageState("Profile")
+  }else{
+    setPageState("Sign in")
+  }
+})
+  }, [auth])
+  // console.log(location)
 
   function matchRoute (route){
     if(route === location.pathname){
@@ -30,8 +44,8 @@ const Header = () => {
                  <li className={`py-3 text-sm font-semibold text-gray-400 border-b-transparent cursor-pointer ${matchRoute("/offers") && "text-blue-600"}`}>Offers</li>
             </Link>
             
-            <Link to='sign-in'>
-                <li className={`py-3 text-sm font-semibold text-gray-400 border-b-transparent cursor-pointer ${matchRoute("/sign-in") && "text-blue-600 border-b-black"}`}>Sign in</li>
+            <Link to='profile'>
+                <li className={`py-3 text-sm font-semibold text-gray-400 border-b-transparent cursor-pointer $({matchRoute("/sign-in") || matchRoute("/profile")) && "text-blue-600 border-b-black"}`}>{pageState}</li>
             </Link>
             
           </ul>
