@@ -98,11 +98,14 @@ export default function Profile() {
               </p>
             </div>
           </form>
-            <Link to='create-listing'>
-           
+            
+           <Link to='create-listing'>
           <button type="submit" className="flex items-center justify-center w-full bg-blue-600 text-white uppercase py-3 px-7 text-sm font-medium rounded shadow-md hover:shadow-lg hover:bg-blue-700 transition duration-150 ease-in-out active:bg-blue-800 ">
+              
             <FcHome className="mr-2 text-3xl bg-red-200 rounded-full p-1 border-2"/> Sell or rent your home
+            
             </button>
+
              </Link>
         </div>
       </section>
