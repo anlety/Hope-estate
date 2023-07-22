@@ -7,7 +7,7 @@ const ListingItem = ({listing, id}) => {
   return (
     <li className='relative bg-white flex flex-col justify-between items-center shadow-md hover:shadow-xl rounded-md overflow-hidden transition-shadow duration-150 m-[10px]'>
       <Link className='contents' to={`/category/${listing.type}/${id}`}>
-        <img src={listing.imgUrls[0]} alt='house' className='h-[170px] w-full objet-cover hover:scale-150 transition duration-105 ease-in '
+        <img src={listing.imgUrls[0]} alt='house' className='h-[170px] w-full objet-cover hover:scale-105 transition duration-200 ease-in '
         loading="lazy"
         />
         <Moment className='absolute top-2 left-2 bg-[#3377cc] text-white uppercase text-xs font-semibold rounded-md px-2 py-1 shadow-lg' fromNow>
@@ -20,7 +20,7 @@ const ListingItem = ({listing, id}) => {
           </div>
           <p className='font-semibold m-0 text-xl truncate'>{listing.name}</p>
           <p className='text-[#667b88] mt-2 font-semibold '>${listing.offer? listing.discountedPrice.toString()
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",") : listing.regularPrice  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",") : listing.regularPrice.toString()
                   .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   {listing.type === "rent" && " / month"}
                   </p>
