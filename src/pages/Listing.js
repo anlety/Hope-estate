@@ -1,5 +1,6 @@
 import { doc, getDoc } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
+import { getAuth} from "firebase/auth";
 import { useParams } from 'react-router-dom';
 import { db } from '../firebase';
 import Spinner from '../components/Spinner';
@@ -14,12 +15,15 @@ import {PiCarProfileFill, PiChairFill} from "react-icons/pi"
 
 // import Swiper styles
 import 'swiper/css/bundle';
+import Contact from '../components/Contact';
 
 const Listing = () => {
   const [listing, setListing] = useState(null)
   const [loading, setLoading] = useState(true)
   const [shareLink, setShareLink] = useState(false)
+  const [contactLandlord, setContactLandlord] = useState(false)
   SwiperCore.use([Autoplay, Navigation, Pagination])
+  const auth = getAuth()
   const params = useParams()
   useEffect(()=> {
     async function fetchListing(){
@@ -62,7 +66,7 @@ const Listing = () => {
         <p className="fixed top-[23%] right-[5%] font-semibold border-2 border-gray-400 rounded-md bg-white z-10 p-2">Link copied</p>
       )}
       <div className='flex flex-col md:flex-row m-4 max-w-6xl lg:mx-auto p-4 rounded-lg shadow-lg bg-white lg:space-x-5'>
-        <div className=' w-full h-[200px] lg-[400px]'> 
+        <div className=' w-full'> 
           <p className='text-2xl font-bold mb-3 text-blue-900'>
             {listing.name} - $ {listing.offer ? listing.discountedPrice.toString()
                   .replace(/\B(?=(\d{3})+(?!\d))/g, ",") : listing.regularPrice.toString()
@@ -80,7 +84,7 @@ const Listing = () => {
             )}
           </div>
           <p className='mb-3 mt-3'> <span className='font-semibold'>Description -</span> {listing.description}</p>
-          <ul className='flex items-center space-x-2 sm:space-x-10 text-sm font-semibold'>
+          <ul className='flex items-center space-x-2 sm:space-x-10 text-sm font-semibold mb-6'>
             <li className='flex items-center whitespace-nowrap'> <GiPersonInBed className='text-lg mr-1'/> {+listing.bedrooms > 1 ? `${listing.bedrooms} Beds` : "1 Bed"}</li>
 
             <li className='flex items-center whitespace-nowrap'> <GiBathtub className='text-lg mr-1'/> {+listing.bathrooms > 1 ? `${listing.bathrooms} Baths` : "1 Bath"}</li>
@@ -89,6 +93,13 @@ const Listing = () => {
 
             <li className='flex items-center whitespace-nowrap'> <PiChairFill className='text-lg mr-1'/> {+listing.furnished  ? "Furnished" : "No furnished"}</li>
           </ul>
+          {listing.userRef !== auth.currentUser?.uid && !contactLandlord &&(
+            <div className='mt-6'>
+             <button onClick={()=> setContactLandlord(true)} className='px-7 py-3 bg-blue-600 text-white font-medium text-sm uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg w-full transition duration-150 ease-in-out'>Contact Landlord</button>
+          </div>
+          )}
+          {contactLandlord && (<Contact useRef={listing.userRef} listing={listing}/>)}
+         
         </div>
         <div className='bg-blue-300 w-full h-[200px] lg-[400px] z-10 overflow-x-hidden'> </div>
       </div>
