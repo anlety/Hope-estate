@@ -81,7 +81,7 @@ const Category = () => {
         </div>
       )}
     </>
-    ) : (<p className='justify-center'> There are no current offers</p>)}
+    ) : (<p className='justify-center'> There are no current {params.categoryName === "rent"? "property for rent" : "property for sale"}</p>)}
   </div>
   )
 }
